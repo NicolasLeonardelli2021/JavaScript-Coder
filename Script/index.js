@@ -75,3 +75,29 @@ function ingresoDatos(){
 }while(i == "0");
     
 }
+
+
+$('#ingresar').on('click',()=>{
+    $('#ingresar')
+    $('#formulario').append(`<form>
+    <legend>Ingreso de Dinero</legend>
+    <div class="col-4">
+      <label for="disabledTextInput" class="form-label">Fecha</label>
+      <input type="date" id="disabledTextInput" class="form-control">
+    </div>
+    <div class="col-4">
+      <label for="disabledSelect" class="form-label">Monto</label>
+      <input type="number" id="disabledTextInput" class="form-control">
+        
+    </div>
+    <div class="col-6">
+      <label for="disabledSelect" class="form-label">Descripcion</label>
+      <input type="text" id="disabledTextInput" class="form-control">
+        
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>             
+</form>`);
+});
+
+
+
