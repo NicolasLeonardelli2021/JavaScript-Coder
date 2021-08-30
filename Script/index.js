@@ -1,103 +1,78 @@
-class Billetera{
-    
-    constructor(montoInicial){
-        this.monto = montoInicial;
-        this.vectorIngreso = [];
-        this.vectorGastos = [];
+
+const billetera = [];
+
+const guardarLocal = (clave, valor) => {localStorage.setItem(clave,valor)};
+
+
+
+class ingresoDinero{
+    constructor(fecha, dinero, descripcion){
+        this.fecha = fecha;
+        this.ingresoDinero = dinero;
+        this.descripcion = descripcion;
+
+    }
+}
+
+class movimientos{
+    constructor(){
+        this.ingreso = [];
+        this.gastos = [];
     }
 
-    ingreso(dinero){
-        this.monto += dinero;
-       this.vectorIngreso.push(dinero);
+    ingresarDinero(ingresoDinero){
+        this.ingreso.push(ingresoDinero);
     }
 
-    gastos(dinero){
-        this.monto -= dinero;
-        this.vectorGastos.push(dinero);
+    egresoDinero(egresoDinero){
+        this.gastos.push(egresoDinero);
     }
+
     mostrarIngresos(){
         let sumador = 0;
-        for(let ingresos of this.vectorIngreso){
-            sumador += ingresos;
+        for(let ingresos of ingreso){
+            sumador += ingresos.dinero;
         }
-        alert(this.vectorIngreso.join("\n")+ "\n TOTAL DE INGRESOS: " + sumador);
-    }
-    mostrarGastos(){
-        let sumador = 0;
-        for(let gastos of this.vectorGastos){
-            sumador += gastos;
-        }
-        alert(this.vectorGastos.join("\n")+ "\n TOTAL DE GASTOS: " + sumador);
-    }
-
-    mostrarReca(){
-        alert("La recaudacion es: " + this.monto);
-    }
-
-    saludar(){
-        alert("hasta luego");
+        alert(this.ingreso.join("\n")+ "\n TOTAL DE INGRESOS: " + sumador);
     }
 
 }
 
-
-function ingresoDatos(){
-    
-    const billetera1 = new Billetera(parseInt(prompt("Monto Inicial")));
-    let i = 0;
-    do{
-        let opcion = prompt("1 : Ingreso \n 2 : Gastos \n 3 : Mostrar dinero Ingresado \n  4 : Mostrar Gastos \n 5: Mostrar Recaudacion Libre \n  6: Salir" );
-
-    switch(opcion){
-        case "1": 
-            billetera1.ingreso(parseInt(prompt("Ingreso")));
-            break;
-        case "2": 
-            billetera1.gastos(parseInt(prompt("Gastos")));
-            break;
-        case "3":
-            billetera1.mostrarIngresos();
-            break;
-        case "4":
-            billetera1.mostrarGastos();
-            break;
-        case "5": 
-            billetera1.mostrarReca();
-            break;
-        case "6":
-            billetera1.saludar();
-            i = 1;
-            break;
-        default: 
-        alert("Opcion invalida"); 
-        break;
-    }
-}while(i == "0");
-    
-}
 
 
 $('#ingresar').on('click',()=>{
-    $('#ingresar')
-    $('#formulario').append(`<form>
-    <legend>Ingreso de Dinero</legend>
-    <div class="col-4">
-      <label for="disabledTextInput" class="form-label">Fecha</label>
-      <input type="date" id="disabledTextInput" class="form-control">
-    </div>
-    <div class="col-4">
-      <label for="disabledSelect" class="form-label">Monto</label>
-      <input type="number" id="disabledTextInput" class="form-control">
-        
-    </div>
-    <div class="col-6">
-      <label for="disabledSelect" class="form-label">Descripcion</label>
-      <input type="text" id="disabledTextInput" class="form-control">
-        
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>             
+    $("#formulario").remove();
+    $("h2").remove();
+    $('#formularioDiv').append(`<form id="formulario">
+      <input type="date" id="fecha" class="form-control formul">
+      <input type="number" id="dinero" class="form-control formul">
+      <input type="text" id="descripcion" class="form-control formul">
+    <input type="submit" id="botonEnviar" class="btn btn-primary" value="Enviar">            
 </form>`);
+
+
+  $("#formulario").submit(function(e){
+    e.preventDefault();
+    let hijos = $(e.target).children();
+    billetera.push(new ingresoDinero(hijos[0].value,hijos[1].value,hijos[2].value));
+    $("form").replaceWith(`<h2>dinero Cargado </h2>`);
+  
+  
+});
 });
 
 
 
+
+$('#botonGuardar').on('click',()=>{
+
+
+    
+    
+        guardarLocal("movimientoDiario",JSON.stringify(billetera));
+        $("#botonGuardar").replaceWith(`<h2>Los datos fueron guardados con exito </h2>`);
+});
+
+$('#borrar').on('click',()=>{
+    localStorage.clear();
+});
