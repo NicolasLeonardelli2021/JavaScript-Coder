@@ -1,7 +1,4 @@
 
-const billetera = [];
-
-const guardarLocal = (clave, valor) => {localStorage.setItem(clave,valor)};
 
 
 
@@ -11,6 +8,14 @@ class ingresoDinero{
         this.ingresoDinero = dinero;
         this.descripcion = descripcion;
 
+    }
+}
+
+class ingresoGasto{
+    constructor(fecha,dinero, descripcion){
+        this.fecha = fecha;
+        this.denero = dinero;
+        this.descripcion = descripcion
     }
 }
 
@@ -40,39 +45,3 @@ class movimientos{
 
 
 
-$('#ingresar').on('click',()=>{
-    $("#formulario").remove();
-    $("h2").remove();
-    $('#formularioDiv').append(`<form id="formulario">
-      <input type="date" id="fecha" class="form-control formul">
-      <input type="number" id="dinero" class="form-control formul">
-      <input type="text" id="descripcion" class="form-control formul">
-    <input type="submit" id="botonEnviar" class="btn btn-primary" value="Enviar">            
-</form>`);
-
-
-  $("#formulario").submit(function(e){
-    e.preventDefault();
-    let hijos = $(e.target).children();
-    billetera.push(new ingresoDinero(hijos[0].value,hijos[1].value,hijos[2].value));
-    $("form").replaceWith(`<h2>dinero Cargado </h2>`);
-  
-  
-});
-});
-
-
-
-
-$('#botonGuardar').on('click',()=>{
-
-
-    
-    
-        guardarLocal("movimientoDiario",JSON.stringify(billetera));
-        $("#botonGuardar").replaceWith(`<h2>Los datos fueron guardados con exito </h2>`);
-});
-
-$('#borrar').on('click',()=>{
-    localStorage.clear();
-});
