@@ -8,6 +8,10 @@ h1{
     color: white;
 }
 
+h2{
+    text-align: center;
+}
+
 .contenedor{
     display: grid;
     grid-template-columns: repeat(8, 1fr);
